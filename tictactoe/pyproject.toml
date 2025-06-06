@@ -7,14 +7,14 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "gradio_tic-tac-toe"
+name = "gradio_tictactoe"
 version = "0.0.1"
-description = "A custom component for playing tic-tac-toe"
+description = "A component to play tictactoe"
 readme = "README.md"
 license = "apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
-keywords = ["gradio-custom-component", "gradio-template-Fallback", "tic-tac-toe", "board game"]
+keywords = ["gradio-custom-component", "gradio-template-Fallback", "tictactoe"]
 # Add dependencies here
 dependencies = ["gradio>=4.0,<6.0"]
 classifiers = [
@@ -45,7 +45,7 @@ classifiers = [
 dev = ["build", "twine"]
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_tic-tac-toe/templates", "*.pyi"]
+artifacts = ["/backend/gradio_tictactoe/templates", "*.pyi"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["/backend/gradio_tic-tac-toe"]
+packages = ["/backend/gradio_tictactoe"]

@@ -1,5 +1,5 @@
 {
-  "name": "gradio_tic-tac-toe",
+  "name": "gradio_tictactoe",
   "version": "0.4.22",
   "description": "Gradio UI packages",
   "type": "module",

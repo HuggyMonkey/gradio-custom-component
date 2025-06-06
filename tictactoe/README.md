@@ -1,7 +1,7 @@
 ---
-tags: [gradio-custom-component, , tic-tac-toe, board game]
-title: gradio_tic-tac-toe
-short_description: A custom component for playing tic-tac-toe
+tags: [gradio-custom-component, , tictactoe]
+title: gradio_tictactoe
+short_description: A component to play tictactoe
 colorFrom: blue
 colorTo: yellow
 sdk: gradio
@@ -9,7 +9,7 @@ pinned: false
 app_file: space.py
 ---
 
-# gradio_tic-tac-toe
+# gradio_tictactoe
 
 You can auto-generate documentation for your custom component with the `gradio cc docs` command.
 You can also edit this file however you like.
