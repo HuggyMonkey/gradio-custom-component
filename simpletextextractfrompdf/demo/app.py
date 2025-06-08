@@ -2,12 +2,12 @@
 import gradio as gr
 from gradio_simpletextextractfrompdf import SimpleTextExtractFromPDF
 
-def first_100_chars(text):
+def first_200_chars(text):
     return text[:200]
 
 
 demo = gr.Interface(
-    fn=first_100_chars,
+    fn=first_200_chars,
     inputs=SimpleTextExtractFromPDF(),
     outputs=gr.Textbox(label="First 200 characters of the extracted text"),
     title="Simple Text Extract From PDF",

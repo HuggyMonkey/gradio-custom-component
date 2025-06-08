@@ -10,7 +10,7 @@ app_file: space.py
 ---
 
 # `gradio_simpletextextractfrompdf`
-<img alt="Static Badge" src="https://img.shields.io/badge/version%20-%200.0.1%20-%20orange">  
+<a href="https://pypi.org/project/gradio_simpletextextractfrompdf/" target="_blank"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/gradio_simpletextextractfrompdf"></a>  
 
 extract text from simple pdf documents
 
@@ -27,12 +27,12 @@ pip install gradio_simpletextextractfrompdf
 import gradio as gr
 from gradio_simpletextextractfrompdf import SimpleTextExtractFromPDF
 
-def first_100_chars(text):
+def first_200_chars(text):
     return text[:200]
 
 
 demo = gr.Interface(
-    fn=first_100_chars,
+    fn=first_200_chars,
     inputs=SimpleTextExtractFromPDF(),
     outputs=gr.Textbox(label="First 200 characters of the extracted text"),
     title="Simple Text Extract From PDF",
