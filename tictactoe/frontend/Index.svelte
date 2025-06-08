@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { JsonView } from "@zerodevx/svelte-json-view";
+	import Board from "./shared/Board.svelte";
 
 	import type { Gradio } from "@gradio/utils";
-	import { Block, Info } from "@gradio/atoms";
+	import { Block } from "@gradio/atoms";
 	import { StatusTracker } from "@gradio/statustracker";
 	import type { LoadingStatus } from "@gradio/statustracker";
 	import type { SelectData } from "@gradio/utils";
@@ -10,7 +10,7 @@
 	export let elem_id = "";
 	export let elem_classes: string[] = [];
 	export let visible = true;
-	export let value = false;
+	export let value: string;
 	export let container = true;
 	export let scale: number | null = null;
 	export let min_width: number | undefined = undefined;
@@ -21,6 +21,11 @@
 		input: never;
 		clear_status: LoadingStatus;
 	}>;
+
+	function reverseString(value: string) {
+		return value.split("").reverse().join("");
+	}
+
 </script>
 
 <Block {visible} {elem_id} {elem_classes} {container} {scale} {min_width}>
@@ -33,5 +38,6 @@
 		/>
 	{/if}
 
-	<JsonView json={value} />
+	{reverseString(value)}
+	<Board />
 </Block>
