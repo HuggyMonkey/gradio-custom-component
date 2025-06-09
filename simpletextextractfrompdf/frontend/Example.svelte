@@ -14,7 +14,7 @@
 	class:gallery={type === "gallery"}
 	class:selected
 >
-	{value}
+
 	<PDFuploadAndExtract/>
 	<PDFviewer/>
 	<TextContentViewer textContent={value}/>

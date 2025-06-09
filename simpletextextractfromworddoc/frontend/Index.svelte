@@ -1,9 +1,9 @@
 <script lang="ts">
-	import PDFuploadAndExtract from "./shared/components/PDFuploadAndExtract.svelte";
-	import PDFviewer from "./shared/components/PDFviewer.svelte";
-	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
+	import WordUpload from "./shared/WordUpload.svelte";
+	import TextContentViewer from "./shared/TextContentViewer.svelte";
 
-	
+	import { JsonView } from "@zerodevx/svelte-json-view";
+
 	import type { Gradio } from "@gradio/utils";
 	import { Block } from "@gradio/atoms";
 	import { StatusTracker } from "@gradio/statustracker";
@@ -11,7 +11,7 @@
 	export let elem_id = "";
 	export let elem_classes: string[] = [];
 	export let visible = true;
-	export let value: string;
+	export let value: string = "";
 	export let container = true;
 	export let scale: number | null = null;
 	export let min_width: number | undefined = undefined;
@@ -21,18 +21,9 @@
 		clear_status: LoadingStatus;
 	}>;
 
-	let file: File | null = null
-
-	
-	function handleUpload(event: CustomEvent<{content: {asString: string, asFile: File}, type: string}>) {
-		let {content: {asString, asFile }} = event.detail
-
-		value = asString
-		file = asFile
-
-		console.log("uploaded")
+	function handleUpload(event: CustomEvent<{selectedFileText: string}>) {
+		value = event.detail.selectedFileText
 	}
-
 </script>
 
 <Block {visible} {elem_id} {elem_classes} {container} {scale} {min_width}>
@@ -45,12 +36,12 @@
 		/>
 	{/if}
 
-		<PDFuploadAndExtract on:upload={handleUpload} />
+	<div>
+		<WordUpload on:upload={handleUpload}/>
 		<TextContentViewer textContent={value}/>
-		<PDFviewer {file}/>
+	</div>
 
 	<p class="value-status">{value ? "Value is set ✅" : "Value is not set ❌"}</p>
-	
 </Block>
 
 <style>

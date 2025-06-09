@@ -1,23 +1,23 @@
 from __future__ import annotations
 
 from gradio.components.base import Component
-from typing import Any, Callable, Sequence, TYPE_CHECKING
+from typing import Any, Sequence, TYPE_CHECKING
 from gradio.i18n import I18nData
 
 if TYPE_CHECKING:
     from gradio.components import Timer
 
 
-class SimpleTextExtractFromPDF(Component):
+class SimpleTextExtractFromWordDoc(Component):
     """
-    This component extracts text from a PDF file.
+    This component extracts text from a Word document.
     The extracted text can be submitted as an input {string} to the function.
     Only the text is extracted. Images are not extracted and table structures are not preserved
-    PDF file can be uploaded from user's device or from a URL.
+    Word document can be uploaded from user's device.
     This component was designed to be used as an input component.
     As an output component, it will display {string} content in a textarea.
     """
-
+    
     EVENTS = ["submit"]
 
 
@@ -71,11 +71,10 @@ class SimpleTextExtractFromPDF(Component):
             preserved_by_key=preserved_by_key,
         )
 
-
     def preprocess(self, payload: str | None ) -> str | None:
         """
         Parameters:
-            payload: the text extracted from the PDF by the component - string
+            payload: the text extracted from the Word document by the component - string
         Returns:
             Passes the extracted text into the function - string
         """
