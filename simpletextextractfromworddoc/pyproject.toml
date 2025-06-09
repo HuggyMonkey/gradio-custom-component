@@ -13,7 +13,7 @@ description = "gradio component to extra text from word document"
 readme = "README.md"
 license = "apache-2.0"
 requires-python = ">=3.10"
-authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
+authors = [{ name = "HuggyMonkey", email = "huggy.monkey00@gmail.com" }]
 keywords = ["gradio-custom-component", "gradio-template-Fallback", "gradio component", "gradio custom component", "text extraction", "text extract from word document"]
 # Add dependencies here
 dependencies = ["gradio>=4.0,<6.0"]
@@ -39,7 +39,7 @@ classifiers = [
 
 # [project.urls]
 # repository = "your github repository"
-# space = "your space url"
+space = "https://huggingface.co/spaces/HuggyMonkey/SimpleTextExtractFromPDFDemo"
 
 [project.optional-dependencies]
 dev = ["build", "twine"]

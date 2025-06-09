@@ -7,14 +7,14 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "gradio_simpletextextractfrompdf"
-version = "0.0.2"
-description = "extract text from simple pdf documents"
+name = "gradio_dotmdtostring"
+version = "0.0.1"
+description = "Custom component for extracting text from markdown file"
 readme = "README.md"
 license = "apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "HuggyMonkey", email = "huggy.monkey00@gmail.com" }]
-keywords = ["gradio-custom-component", "gradio-template-Fallback", "text extraction from pdf", "pdf to string", "text extraction"]
+keywords = ["gradio-custom-component", "gradio-template-Fallback", "gradio custom component", "markdown", "extract text from markdown file", "markdown file to string"]
 # Add dependencies here
 dependencies = ["gradio>=4.0,<6.0"]
 classifiers = [
@@ -45,7 +45,7 @@ classifiers = [
 dev = ["build", "twine"]
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_simpletextextractfrompdf/templates", "*.pyi"]
+artifacts = ["/backend/gradio_dotmdtostring/templates", "*.pyi"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["/backend/gradio_simpletextextractfrompdf"]
+packages = ["/backend/gradio_dotmdtostring"]
