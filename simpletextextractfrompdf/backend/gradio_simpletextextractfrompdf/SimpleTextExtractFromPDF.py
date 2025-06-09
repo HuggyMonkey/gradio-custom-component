@@ -18,7 +18,7 @@ class SimpleTextExtractFromPDF(Component):
     As an output component, it will display {string} content in a textarea.
     """
 
-    EVENTS = ["submit", "upload"]
+    EVENTS = ["submit"]
 
 
     def __init__(
