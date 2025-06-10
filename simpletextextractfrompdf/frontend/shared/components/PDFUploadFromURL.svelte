@@ -96,7 +96,7 @@
 
         progessStatus = "Text extracted successfully"
 
-        dispatch("upload", {content: {asString: selectedFileText, asFile: selectedFile}, type: "pdf"})
+        dispatch("upload", {content: {asString: selectedFileText, asFiles: [selectedFile]}, type: "pdf"})
     }
 
 

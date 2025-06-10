@@ -20,7 +20,7 @@
 		clear_status: LoadingStatus;
 	}>;
 
-	let files: File[] | null = null	
+	let files: File[] = []
 
 	
 	function handleUpload(event: CustomEvent<{content: {asString: string, asFiles: File[]}, type: string}>) {
