@@ -21,40 +21,50 @@
             return;
         }
 
-        const response = await fetch(markdownUrl);
+        try {
+            const response = await fetch(markdownUrl);
 
-        if (!response.ok) {
+            if (!response.ok) {
+                fetching = false;
+                errorMessage = `Failed to fetch Markdown: ${response.status}`;
+                return;
+            }
+
+            // Check content type or file extension
+            const contentType = response.headers.get("content-type") || "";
+            if (
+                !contentType.includes("text/markdown") &&
+                !markdownUrl.toLowerCase().endsWith(".md")
+            ) {
+                fetching = false;
+                errorMessage = "The URL you provided did not return a Markdown file. Please check the URL and try again.";
+                return;
+            }
+
+            // extract text from markdown file
+            const text = await response.text();
+
+            if (!text.trim()) {
+                fetching = false;
+                errorMessage = "The URL you provided returned an empty file.";
+                return;
+            }
+
+            selectedFile = new File([text], markdownUrl.split("/").pop() || "downloaded.md", { type: "text/markdown" });
+            fileName = selectedFile.name;
+            selectedFileText = text;
+
             fetching = false;
-            errorMessage = `Failed to fetch Markdown: ${response.status}`;
-            return;
-        }
-
-        // Check content type or file extension
-        const contentType = response.headers.get("content-type") || "";
-        if (
-            !contentType.includes("text/markdown") &&
-            !markdownUrl.toLowerCase().endsWith(".md")
-        ) {
+            errorMessage = "";
+        } catch (err) {
             fetching = false;
-            errorMessage = "The URL you provided did not return a Markdown file. Please check the URL and try again.";
-            return;
+            //TypeError in the browser
+            if (err instanceof TypeError) {
+                errorMessage = "An error occured fetching the file. Please check the URL and try again.";
+            } else {
+                errorMessage = "Oh no. Something went wrong. Please refresh the page and try again or a different URL.";
+            }
         }
-
-        // extract text from markdown file
-        const text = await response.text();
-
-        if (!text.trim()) {
-            fetching = false;
-            errorMessage = "The URL you provided returned an empty file.";
-            return;
-        }
-
-        selectedFile = new File([text], markdownUrl.split("/").pop() || "downloaded.md", { type: "text/markdown" });
-        fileName = selectedFile.name;
-        selectedFileText = text;
-
-        fetching = false;
-        errorMessage = "";
     }
 
     async function dispatchUpload() {

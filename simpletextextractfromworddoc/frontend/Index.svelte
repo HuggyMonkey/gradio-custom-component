@@ -20,8 +20,8 @@
 		clear_status: LoadingStatus;
 	}>;
 
-	function handleUpload(event: CustomEvent<{selectedFileText: string}>) {
-		value = event.detail.selectedFileText
+	function handleUpload(event: CustomEvent<{selectedFilesText: string}>) {
+		value = event.detail.selectedFilesText
 	}
 </script>
 

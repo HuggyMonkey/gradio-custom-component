@@ -20,14 +20,14 @@
 		clear_status: LoadingStatus;
 	}>;
 
-	let file: File | null = null
+	let files: File[] | null = null	
 
 	
-	function handleUpload(event: CustomEvent<{content: {asString: string, asFile: File}, type: string}>) {
-		let {content: {asString, asFile }} = event.detail
+	function handleUpload(event: CustomEvent<{content: {asString: string, asFiles: File[]}, type: string}>) {
+		let {content: {asString, asFiles }} = event.detail
 
 		value = asString
-		file = asFile
+		files = asFiles
 	}
 
 </script>
@@ -44,7 +44,7 @@
 
 		<UploadAndExtract on:upload={handleUpload} />
 		<TextContentViewer bind:textContent={value}/>
-		<PDFviewer {file}/>
+		<PDFviewer {files}/>
 
 	<p class="value-status">{value ? "Value is set ✅" : "Value is not set ❌"}</p>
 	

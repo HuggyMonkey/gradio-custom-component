@@ -1,27 +1,33 @@
 <script lang="ts">
-    export let file: File | null = null
+    export let files: File[] | null = null
+
     let showPDF = true
+    let currentFile: File | null = null
+
+    $: if (files) {
+        currentFile = files[0]
+    }
 </script>
 
 <button class="button" on:click={() => showPDF = !showPDF}>
     {showPDF ? "Hide PDF" : "Show PDF"}
 </button>
 
-{#if file && showPDF}
+{#if currentFile && showPDF}
     <div class="pdf-viewer-container">
         <object
-            data={URL.createObjectURL(file)}
+            data={URL.createObjectURL(currentFile)}
             type="application/pdf"
             class="pdf-object"
             title="Resume PDF Viewer"
             aria-label="PDF resume document viewer"
             role="document"
         >
-            <p>Your browser doesn't support PDF viewing. <a href={URL.createObjectURL(file)} target="_blank" aria-label="Download resume PDF" title="Download PDF">Click here to download the PDF</a>.</p>
+            <p>Your browser doesn't support PDF viewing. <a href={URL.createObjectURL(currentFile)} target="_blank" aria-label="Download resume PDF" title="Download PDF">Click here to download the PDF</a>.</p>
         </object>
     </div>
 {/if}
-{#if !file}
+{#if !currentFile}
     <div class="container">
         <p>The PDF will appear here</p>
     </div>

@@ -21,45 +21,55 @@
   
     async function fetchPDF() {
 
-    fetching = true
-    selectedFile = null
-    errorMessage = ""
+        fetching = true
+        selectedFile = null
+        errorMessage = ""
 
-    if (!pdfUrl) {
-        fetching = false
-        errorMessage = "Please enter a valid URL"
-        return;
-    }
+        if (!pdfUrl) {
+            fetching = false
+            errorMessage = "Please enter a valid URL"
+            return;
+        }
 
-    const response = await fetch(pdfUrl);
+        try {
+            const response = await fetch(pdfUrl);
 
-      if (!response.ok) {
-        fetching = false
-        errorMessage = `Failed to fetch PDF: ${response.status}`
-        return;
-      }
-  
-      const blob = await response.blob();
+            if (!response.ok) {
+                fetching = false
+                errorMessage = `Failed to fetch PDF: ${response.status}`
+                return;
+            }
+        
+            const blob = await response.blob();
 
-    // check blob is empty
-    if (blob.size === 0) {
-        fetching = false
-        errorMessage = "The url you provided did not return a PDF. Please check the URL and try again."
-        return;
-    }
+            // check blob is empty
+            if (blob.size === 0) {
+                fetching = false
+                errorMessage = "The url you provided did not return a PDF. Please check the URL and try again."
+                return;
+            }
 
-    // check blob is a pdf
-    if (blob.type !== "application/pdf") {
-        fetching = false
-        errorMessage = "The url you provided did not return a PDF. Please check the URL and try again."
-        return;
-    }
+            // check blob is a pdf
+            if (blob.type !== "application/pdf") {
+                fetching = false
+                errorMessage = "The url you provided did not return a PDF. Please check the URL and try again."
+                return;
+            }
 
-      selectedFile = new File([blob], "downloaded.pdf", { type: blob.type });
-      fileName = selectedFile.name
+            selectedFile = new File([blob], "downloaded.pdf", { type: blob.type });
+            fileName = selectedFile.name
 
-       fetching = false
-       errorMessage = ""
+            fetching = false
+            errorMessage = ""
+        } catch (err) {
+            fetching = false;
+            //TypeError in the browser
+            if (err instanceof TypeError) {
+                errorMessage = "An error occured fetching the file. Please check the URL and try again.";
+            } else {
+                errorMessage = "Oh no. Something went wrong. Please refresh the page and try again or a different URL.";
+            }
+        }
     }
 
 

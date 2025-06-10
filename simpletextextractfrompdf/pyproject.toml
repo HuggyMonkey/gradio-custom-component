@@ -8,13 +8,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gradio_simpletextextractfrompdf"
-version = "0.0.2"
-description = "extract text from simple pdf documents"
+version = "0.0.3"
+description = "Extracts text from pdf documents"
 readme = "README.md"
 license = "apache-2.0"
 requires-python = ">=3.10"
 authors = [{ name = "HuggyMonkey", email = "huggy.monkey00@gmail.com" }]
-keywords = ["gradio-custom-component", "gradio-template-Fallback", "text extraction from pdf", "pdf to string", "text extraction"]
+keywords = ["gradio-custom-component", "gradio-template-Fallback", "text extraction from pdf", "pdf to string", "simple text extraction"]
 # Add dependencies here
 dependencies = ["gradio>=4.0,<6.0"]
 classifiers = [
@@ -39,7 +39,7 @@ classifiers = [
 
 # [project.urls]
 # repository = "your github repository"
-# space = "your space url"
+# space = "https://huggingface.co/spaces/HuggyMonkey/SimpleTextExtractFromPDFDemo"
 
 [project.optional-dependencies]
 dev = ["build", "twine"]

@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class dotMDtoString(Component):
     """
     This component converts a markdown file to a string.
-    The markdown file can be uploaded from user's device.
+    The markdown file can be uploaded from user's device or from a URL.
     This component was designed to be used as an input component.
     As an output component, it will display {string} content in a textarea.
     """

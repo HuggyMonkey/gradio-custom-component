@@ -54,7 +54,11 @@ async function dispatchUpload() {
     if (selectedFilesText.length > 0) {
         // Combine all the extracted text into a single string, with file names
         dispatch("upload", {
-            selectedFilesText: selectedFilesText.map((text, i) => `## ${fileNames[i]}\n${text}`).join('\n\n')
+            content: {
+                asString: selectedFilesText.map((text, i) => `## ${fileNames[i]}\n${text}`).join('\n\n'),
+                asFiles: selectedFiles
+            },
+            type: "pdf",
         });
         progressStatus = "Text extracted successfully";
     } else {

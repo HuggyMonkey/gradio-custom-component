@@ -36,13 +36,28 @@ demo = gr.Interface(
     inputs=SimpleTextExtractFromPDF(),
     outputs=gr.Textbox(label="First 200 characters of the extracted text"),
     title="Simple Text Extract From PDF",
-    description="Extract text from a PDF file or URL",
+    description="""
+## Component Description
+This space is to demo the usage of the SimpleTextExtractFromPDF component.
+This component provides a simple interface to extract text from a PDF file. The extracted text can be submitted as a string input to a function for further processing.
+- **Text Extraction Only:** Only the text content is extracted from the PDF. Images and table structures are not preserved.
+- **Flexible Upload Options:** Users can upload a PDF file from their device or provide a URL to the PDF.
+- **Input Component:** The component is primarily designed to be used as an input, allowing users to submit the extracted text to other functions.
+- **Output Display:** When used as an output component, the extracted string content is displayed in a textarea.
+The demo app here uses the SimpleTextExtractFromPDF component as an input component to extract the text from a PDF file and then show the first 200 characters of the extracted text.
+""",
+    article="""
+<p>
+    <code>pip install gradio-simpletextextractfrompdf</code>
+    <br>
+    <a href="https://pypi.org/project/gradio-simpletextextractfrompdf/"> https://pypi.org/project/gradio-simpletextextractfrompdf/</a>
+</p>
+""",
 )
 
 
 if __name__ == "__main__":
     demo.launch()
-
 ```
 
 ## `SimpleTextExtractFromPDF`
@@ -69,7 +84,7 @@ str | None
 
 </td>
 <td align="left"><code>None</code></td>
-<td align="left">default text to provide in textbox. If a function is provided, the function will be called each time the app loads to set the initial value of this component.</td>
+<td align="left">The extracted text from the file. This value is set by the component and can be submitted as an input {string} to the function.</td>
 </tr>
 
 <tr>
@@ -248,7 +263,6 @@ list[str] | str | None
 | name | description |
 |:-----|:------------|
 | `submit` |  |
-| `upload` |  |
 
 
 

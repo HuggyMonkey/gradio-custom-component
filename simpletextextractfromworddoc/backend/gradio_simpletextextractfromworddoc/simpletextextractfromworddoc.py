@@ -13,7 +13,7 @@ class SimpleTextExtractFromWordDoc(Component):
     This component extracts text from a Word document.
     The extracted text can be submitted as an input {string} to the function.
     Only the text is extracted. Images are not extracted and table structures are not preserved
-    Word document can be uploaded from user's device.
+    Word document can be uploaded from user's device or from a URL.
     This component was designed to be used as an input component.
     As an output component, it will display {string} content in a textarea.
     """

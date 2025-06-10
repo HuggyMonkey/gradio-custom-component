@@ -8,14 +8,14 @@
     export let type: "gallery" | "table";
     export let selected = false;
 
-	let file: File | null = null
+	let files: File[] | null = null
 
 	
-	function handleUpload(event: CustomEvent<{content: {asString: string, asFile: File}, type: string}>) {
-		let {content: {asString, asFile }} = event.detail
+	function handleUpload(event: CustomEvent<{content: {asString: string, asFiles: File[]}, type: string}>) {
+		let {content: {asString, asFiles }} = event.detail
 
 		value = asString
-		file = asFile
+		files = asFiles
 	}
 </script>
 
@@ -26,7 +26,7 @@
 >
 
 	<UploadAndExtract on:upload={handleUpload} />
-	<PDFviewer bind:file/>
+	<PDFviewer bind:files/>
 	<TextContentViewer bind:textContent={value}/>
 
 </div>
