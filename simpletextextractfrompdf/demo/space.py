@@ -24,7 +24,7 @@ with gr.Blocks(
 <a href="https://pypi.org/project/gradio_simpletextextractfrompdf/" target="_blank"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/gradio_simpletextextractfrompdf"></a>  
 </div>
 
-extract text from simple pdf documents
+Extracts text from pdf documents
 """, elem_classes=["md-custom"], header_links=True)
     app.render()
     gr.Markdown(

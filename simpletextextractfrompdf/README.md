@@ -12,7 +12,7 @@ app_file: space.py
 # `gradio_simpletextextractfrompdf`
 <a href="https://pypi.org/project/gradio_simpletextextractfrompdf/" target="_blank"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/gradio_simpletextextractfrompdf"></a>  
 
-extract text from simple pdf documents
+Extracts text from pdf documents
 
 ## Installation
 
