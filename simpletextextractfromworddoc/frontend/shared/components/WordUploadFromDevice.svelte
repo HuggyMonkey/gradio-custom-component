@@ -5,60 +5,59 @@
     
     const dispatch = createEventDispatcher()
     
-        let fileName = ""
-        let selectedFile: File | null = null
-        let selectedFileText = ""
+    let selectedFiles: File[] = []
+    let selectedFilesText: string[] = []
+    let fileNames: string[] = []
+    let progressStatus: string = ""
+    let errorMessage: string = ""
 
-        $: progessStatus = ""
-        let errorMessage = ""
-    
-        function handleFileSelect(event: Event) {
-    
-            const input = event.target as HTMLInputElement
-    
-            if (input.files && input.files[0]) {
-                selectedFile = input.files[0]
-                fileName = selectedFile.name
-            }
-    
+    function handleFileSelect(event: Event) {
+        const input = event.target as HTMLInputElement
+        if (input.files && input.files.length > 0) {
+            selectedFiles = Array.from(input.files)
+            fileNames = selectedFiles.map(f => f.name)
+            errorMessage = ""
+            progressStatus = ""
         }
+        // Reset input so the same files can be selected again
+        input.value = ""
+    }
     
-        async function dispatchUpload(){
-    
-            progessStatus = "Checking file..."
-    
-            // ## function guards
-            if (!selectedFile) {
-                progessStatus = ""
-                errorMessage = "No file selected. Please select a file to upload."
-                return
-            }
-    
-            // check if file is a word document
-            if (selectedFile.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-                progessStatus = ""
-                selectedFile = null
-                errorMessage = "The file you selected is not a word document. Please select a word document and try again."
-                return
-            }
-    
-            // extract text from word document
-            selectedFileText = await extractTextFromDocx(selectedFile);
+    async function dispatchUpload(){
+        progressStatus = "Checking files..."
+        errorMessage = ""
+        selectedFilesText = []
 
-            // check if text was extracted
-            if (!selectedFile || selectedFileText.length === 0) {
-                progessStatus = ""
-                selectedFile = null
-                errorMessage = "No text found in the file. Please select a different file."
-                return
-            }
-    
-            // dispatch upload
-            dispatch("upload", {selectedFileText})
-        
-            progessStatus = "Text extracted successfully"
-    
+        if (selectedFiles.length === 0) {
+            progressStatus = ""
+            errorMessage = "No files selected. Please select files to upload."
+            return
         }
+
+        for (const file of selectedFiles) {
+            // Updated file type check for .doc and .docx
+            if (!/\.(docx|doc)$/i.test(file.name) && file.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && file.type !== "application/msword") {
+                errorMessage = `The file ${file.name} is not a valid Word document.`
+                continue
+            }
+            const text = await extractTextFromDocx(file)
+            if (!text) {
+                errorMessage = `No text found in ${file.name}.`
+                continue
+            }
+            selectedFilesText.push(text)
+        }
+
+        if (selectedFilesText.length > 0) {
+            // Combine all the extracted text into a single string, with file names
+            dispatch("upload", {
+                selectedFilesText: selectedFilesText.map((text, i) => `## ${fileNames[i]}\n${text}`).join('\n\n')
+            })
+            progressStatus = "Text extracted successfully"
+        } else {
+            progressStatus = ""
+        }
+    }
 
     async function extractTextFromDocx(file: File): Promise<string> {
         const arrayBuffer = await file.arrayBuffer();
@@ -76,7 +75,8 @@
             accept=".docx,.doc"
             class="file-input" 
             id="file-upload"
-            on:change={handleFileSelect}
+            multiple
+            on:input={handleFileSelect}
         />
         <label 
             for="file-upload" 
@@ -94,26 +94,31 @@
                 {:else}
                     <p class="file-type-info">Word files only</p>
                 {/if}
-                {#if fileName}
-                    <p class="file-name">{fileName}</p>
+                {#if fileNames.length}
+                    <ul>
+                        {#each fileNames as name}
+                            <li class="file-name">{name}</li>
+                        {/each}
+                    </ul>
                 {/if}
-                {#if progessStatus}
-                    <p class="progess-status">{progessStatus}</p>
+                {#if progressStatus}
+                    <p class="progess-status">{progressStatus}</p>
                 {/if}
             </div>
         </label>
     </div>
 
-     {#if selectedFile}
+     {#if selectedFiles.length > 0}
      <!-- Action Buttons -->
      <div class="action-buttons">
      <button 
          class="cancel-button"
          on:click={() => {
-             selectedFile = null
-             fileName = ""
+             selectedFiles = []
+             selectedFilesText = []
+             fileNames = []
              errorMessage = ""
-             progessStatus = ""
+             progressStatus = ""
          }}
      >
          Cancel
@@ -213,5 +218,10 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: #10b981; /* emerald-500 */
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
 }
 </style>  

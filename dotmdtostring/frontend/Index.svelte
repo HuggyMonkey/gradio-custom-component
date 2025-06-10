@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MarkdownUpload from "./shared/components/MarkdownUpload.svelte";
+	import UploadAndExtract from "./shared/components/UploadAndExtract.svelte";
 	import MarkdownViewer from "./shared/components/MarkdownViewer.svelte";
 
 	import type { Gradio } from "@gradio/utils";
@@ -35,7 +35,7 @@
 		/>
 	{/if}
 
-	<MarkdownUpload on:upload={handleUpload} />
+	<UploadAndExtract on:upload={handleUpload} />
 	<MarkdownViewer bind:markdownText={value} />
 
 	<p class="value-status">{value ? "Value is set ✅" : "Value is not set ❌"}</p>

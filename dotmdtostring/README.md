@@ -1,5 +1,5 @@
 ---
-tags: [gradio-custom-component, , extract text from markdown, markdown file to string, custom gradio component]
+tags: [gradio-custom-component, extract text from markdown, markdown file to string, custom gradio component]
 title: gradio_dotmdtostring
 short_description: extract text from markdown files
 colorFrom: blue

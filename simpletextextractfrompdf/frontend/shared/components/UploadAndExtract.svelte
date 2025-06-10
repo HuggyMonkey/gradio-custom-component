@@ -1,6 +1,6 @@
 <script lang="ts">
-    import UploadFromDevice from "./UploadFromDevice.svelte";
-    import UploadFromURL from "./UploadFromURL.svelte";
+    import PDFUploadFromDevice from "./PDFUploadFromDevice.svelte";
+    import PDFUploadFromURL from "./PDFUploadFromURL.svelte";
 
     let uploadMode: 'device' | 'url' = 'device'
 </script>
@@ -11,9 +11,9 @@
 </div>
 
 {#if uploadMode === "device"}
-    <UploadFromDevice on:upload />
+    <PDFUploadFromDevice on:upload />
 {:else}
-    <UploadFromURL on:upload />
+    <PDFUploadFromURL on:upload />
 {/if}
 
 <style>

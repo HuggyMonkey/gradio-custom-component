@@ -1,5 +1,5 @@
 <script lang="ts">
-	import WordUpload from "./shared/components/WordUpload.svelte";
+	import WordUpload from "./shared/components/WordUploadFromDevice.svelte";
 	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
 
 	export let value: string;

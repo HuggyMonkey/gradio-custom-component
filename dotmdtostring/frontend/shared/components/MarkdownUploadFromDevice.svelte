@@ -3,59 +3,62 @@
 
     const dispatch = createEventDispatcher();
 
-    let fileName = "";
-    let selectedFile: File | null = null;
-    let selectedFileText = "";
-
-    $: progessStatus = "";
-    let errorMessage = "";
+    let selectedFiles: File[] = [];
+    let selectedFilesText: string[] = [];
+    let fileNames: string[] = [];
+    let progressStatus: string = "";
+    let errorMessage: string = "";
 
     function handleFileSelect(event: Event) {
         const input = event.target as HTMLInputElement;
-
-        if (input.files && input.files[0]) {
-            selectedFile = input.files[0];
-            fileName = selectedFile.name;
+        if (input.files && input.files.length > 0) {
+            selectedFiles = Array.from(input.files);
+            fileNames = selectedFiles.map(f => f.name);
+            errorMessage = "";
+            progressStatus = "";
         }
+        // Reset input so the same files can be selected again
+        input.value = "";
     }
 
     async function dispatchUpload() {
-        progessStatus = "Checking file...";
+        progressStatus = "Checking files...";
+        errorMessage = "";
+        selectedFilesText = [];
 
-        if (!selectedFile) {
-            progessStatus = "";
-            errorMessage = "No file selected. Please select a file to upload.";
+        if (selectedFiles.length === 0) {
+            progressStatus = "";
+            errorMessage = "No files selected. Please select files to upload.";
             return;
         }
 
-        // Check if file is a markdown file
-        if (
-            selectedFile.type !== "text/markdown" &&
-            !selectedFile.name.endsWith(".md")
-        ) {
-            progessStatus = "";
-            selectedFile = null;
-            errorMessage = "The file you selected is not a markdown file. Please select a .md file and try again.";
-            return;
+        for (const file of selectedFiles) {
+            if (
+                file.type !== "text/markdown" &&
+                !file.name.endsWith(".md")
+            ) {
+                errorMessage = `The file ${file.name} is not a markdown file.`;
+                continue;
+            }
+            const text = await extractTextFromMarkdown(file);
+            if (!text) {
+                errorMessage = `No text found in ${file.name}.`;
+                continue;
+            }
+            selectedFilesText.push(text);
         }
 
-        // Extract text from markdown file
-        selectedFileText = await extractTextFromMarkdown(selectedFile);
-
-        if (!selectedFile || selectedFileText.length === 0) {
-            progessStatus = "";
-            selectedFile = null;
-            errorMessage = "No text found in the file. Please select a different file.";
-            return;
+        if (selectedFilesText.length > 0) {
+            // combine all the extract text into a single string
+            dispatch("upload", { selectedFilesText: selectedFilesText.map((text, i) => `## ${fileNames[i]}\n${text}`).join('\n\n') });
+            progressStatus = "Text extracted successfully";
+        } else {
+            progressStatus = "";
         }
-
-        dispatch("upload", { selectedFileText });
-
-        progessStatus = "Text extracted successfully";
     }
 
     async function extractTextFromMarkdown(file: File): Promise<string> {
-        return await file.text(); // simpler than arrayBuffer for plain text
+        return await file.text();
     }
 </script>
 
@@ -65,7 +68,8 @@
         accept=".md,text/markdown"
         class="file-input" 
         id="file-upload"
-        on:change={handleFileSelect}
+        multiple
+        on:input={handleFileSelect}
     />
     <label for="file-upload" class="file-label">
         <div class="label-content">
@@ -80,25 +84,30 @@
             {:else}
                 <p class="file-type-info">Markdown files only</p>
             {/if}
-            {#if fileName}
-                <p class="file-name">{fileName}</p>
+            {#if fileNames.length}
+                <ul>
+                    {#each fileNames as name}
+                        <li class="file-name">{name}</li>
+                    {/each}
+                </ul>
             {/if}
-            {#if progessStatus}
-                <p class="progess-status">{progessStatus}</p>
+            {#if progressStatus}
+                <p class="progess-status">{progressStatus}</p>
             {/if}
         </div>
     </label>
 </div>
 
-{#if selectedFile}
+{#if selectedFiles.length}
 <div class="action-buttons">
     <button 
         class="cancel-button"
         on:click={() => {
-            selectedFile = null;
-            fileName = "";
+            selectedFiles = [];
+            selectedFilesText = [];
+            fileNames = [];
             errorMessage = "";
-            progessStatus = "";
+            progressStatus = "";
         }}
     >
         Cancel

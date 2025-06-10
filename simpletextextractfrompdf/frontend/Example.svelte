@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PDFuploadAndExtract from "./shared/components/PDFuploadAndExtract.svelte";
+	import UploadAndExtract from "./shared/components/UploadAndExtract.svelte";
 	import PDFviewer from "./shared/components/PDFviewer.svelte";
 	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
 	
@@ -7,6 +7,16 @@
 	export let value: string;
     export let type: "gallery" | "table";
     export let selected = false;
+
+	let file: File | null = null
+
+	
+	function handleUpload(event: CustomEvent<{content: {asString: string, asFile: File}, type: string}>) {
+		let {content: {asString, asFile }} = event.detail
+
+		value = asString
+		file = asFile
+	}
 </script>
 
 <div
@@ -15,9 +25,9 @@
 	class:selected
 >
 
-	<PDFuploadAndExtract/>
-	<PDFviewer/>
-	<TextContentViewer textContent={value}/>
+	<UploadAndExtract on:upload={handleUpload} />
+	<PDFviewer bind:file/>
+	<TextContentViewer bind:textContent={value}/>
 
 </div>
 

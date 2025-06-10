@@ -1,8 +1,7 @@
 <script lang="ts">
-	import WordUpload from "./shared/components/WordUpload.svelte";
+	import UploadAndExtract from "./shared/components/UploadAndExtract.svelte";
 	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
 
-	import { JsonView } from "@zerodevx/svelte-json-view";
 
 	import type { Gradio } from "@gradio/utils";
 	import { Block } from "@gradio/atoms";
@@ -37,8 +36,8 @@
 	{/if}
 
 	<div>
-		<WordUpload on:upload={handleUpload}/>
-		<TextContentViewer textContent={value}/>
+		<UploadAndExtract on:upload={handleUpload}/>
+		<TextContentViewer bind:textContent={value}/>
 	</div>
 
 	<p class="value-status">{value ? "Value is set ✅" : "Value is not set ❌"}</p>

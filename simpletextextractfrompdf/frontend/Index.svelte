@@ -1,9 +1,8 @@
 <script lang="ts">
-	import PDFuploadAndExtract from "./shared/components/PDFuploadAndExtract.svelte";
+	import UploadAndExtract from "./shared/components/UploadAndExtract.svelte";
 	import PDFviewer from "./shared/components/PDFviewer.svelte";
 	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
 
-	
 	import type { Gradio } from "@gradio/utils";
 	import { Block } from "@gradio/atoms";
 	import { StatusTracker } from "@gradio/statustracker";
@@ -29,8 +28,6 @@
 
 		value = asString
 		file = asFile
-
-		console.log("uploaded")
 	}
 
 </script>
@@ -45,8 +42,8 @@
 		/>
 	{/if}
 
-		<PDFuploadAndExtract on:upload={handleUpload} />
-		<TextContentViewer textContent={value}/>
+		<UploadAndExtract on:upload={handleUpload} />
+		<TextContentViewer bind:textContent={value}/>
 		<PDFviewer {file}/>
 
 	<p class="value-status">{value ? "Value is set ✅" : "Value is not set ❌"}</p>
