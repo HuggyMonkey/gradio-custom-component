@@ -1,6 +1,6 @@
 <script lang="ts">
-	import WordUpload from "./shared/WordUpload.svelte";
-	import TextContentViewer from "./shared/TextContentViewer.svelte";
+	import WordUpload from "./shared/components/WordUpload.svelte";
+	import TextContentViewer from "./shared/components/TextContentViewer.svelte";
 
 	export let value: string;
 	export let type: "gallery" | "table";
