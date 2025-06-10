@@ -8,18 +8,14 @@ if TYPE_CHECKING:
     from gradio.components import Timer
 
 
-class SimpleTextExtractFromPDF(Component):
+class dotMDtoString(Component):
     """
-    This component extracts text from a PDF file.
-    The extracted text can be submitted as an input {string} to the function.
-    Only the text is extracted. Images are not extracted and table structures are not preserved
-    PDF file can be uploaded from user's device or from a URL.
+    This component converts a markdown file to a string.
+    The markdown file can be uploaded from user's device.
     This component was designed to be used as an input component.
     As an output component, it will display {string} content in a textarea.
     """
-
     EVENTS = ["submit"]
-
 
     def __init__(
         self,
@@ -75,7 +71,7 @@ class SimpleTextExtractFromPDF(Component):
     def preprocess(self, payload: str | None ) -> str | None:
         """
         Parameters:
-            payload: the text extracted from the PDF by the component - string
+            payload: the text extracted from the markdown file by the component - string
         Returns:
             Passes the extracted text into the function - string
         """
