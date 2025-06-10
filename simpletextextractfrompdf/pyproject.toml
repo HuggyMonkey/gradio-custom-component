@@ -37,7 +37,7 @@ classifiers = [
 # This will make it easy for people to find your deployed demo or source code when they
 # encounter your project in the wild.
 
-[https://huggingface.co/spaces/HuggyMonkey/SimpleTextExtractFromPDFDemo]
+# ["https://huggingface.co/spaces/HuggyMonkey/SimpleTextExtractFromPDFDemo"]
 # repository = "your github repository"
 # space = "https://huggingface.co/spaces/HuggyMonkey/SimpleTextExtractFromPDFDemo"
 
